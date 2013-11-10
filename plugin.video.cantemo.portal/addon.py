@@ -32,6 +32,9 @@ def showOverview():
     item = xbmcgui.ListItem(ADDON.getLocalizedString(201))
     xbmcplugin.addDirectoryItem(HANDLE, PATH + "?menu=searchlist", item, True)
 
+    item = xbmcgui.ListItem(ADDON.getLocalizedString(204))
+    xbmcplugin.addDirectoryItem(HANDLE, PATH + "?menu=browse", item, True)
+
 #    item = xbmcgui.ListItem(ADDON.getLocalizedString(202))
 #    xbmcplugin.addDirectoryItem(HANDLE, PATH + "?menu=savedsearched", item, True)
 
@@ -116,36 +119,26 @@ def playItem(itemid):
         li = xbmcgui.ListItem(itemid)
         playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
         playlist.add(url=url, listitem=li)
-        xbmc.Player(xbmc.PLAYER_CORE_DVDPLAYER).play(playlist)
+        xbmc.Player(xbmc.PLAYER_CORE_DVDPLAYER).play(url, li)
 
-def search():
+def search(query=None):
 #    try:
+    if query is None:
         keyboard = xbmc.Keyboard('', ADDON.getLocalizedString(200))
         keyboard.doModal()
         if keyboard.isConfirmed():
             query = keyboard.getText()
-            baseurl = "http://%s/API/v1/item/search/?searchquery=%s&crit_mediatypechooser=video" % (HOST, query)
-            try:
-                response = request(baseurl)
-            except:
-                response = []
+
+    if query is not None:
+        baseurl = "http://%s/API/v1/item/search/?searchquery=%s&crit_mediatypechooser=video" % (HOST, query)
+        try:
+            response = request(baseurl)
+        except:
+            response = []
     
+        saveLatestSearch(query)
 
-            saveLatestSearch(query)
-
-#            searches = settings.getSetting("searches")
-#            xmbc.log("CANTEMO SEARCH: got setting" + searches)
-#            if searches:
-#                searches.append(query)
-#            else:
-#                searches = [query]
-#            settings.setSetting("searches")
-                
-            showResults(response)
-#    except:
-#        xbmc.log("")
-#        showResults([])
-
+        showResults(response)
 
 if __name__ == '__main__':
     xbmc.log("CANTEMO CALLED WITH: " + str(sys.argv))
@@ -188,7 +181,11 @@ if __name__ == '__main__':
             pass
         elif menu == "savedseraches":
             pass
+        elif menu == "browse":
+            search(query="")
+            
         elif menu=="search":
-            search()
+            query = PARAMS['query']
+            search(query=query)
     else:
-        searchList()
+        showOverview()
