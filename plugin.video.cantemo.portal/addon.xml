@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="plugin.video.cantemo.portal" version="0.0.1" name="Cantemo Portal" provider-name="Mattias Amnefelt [mattiasa@cantemo.com]">
+	<requires>
+		<import addon="xbmc.python" version="2.1.0"/>
+        <import addon="script.module.simplejson" version="2.0.10"/>
+        <import addon="script.module.buggalo" version="1.1.2"/>
+        <import addon="script.module.parsedom" version="2.5.1" />
+    </requires>
+	<extension point="xbmc.python.pluginsource" library="addon.py">
+        <provides>video audio</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">View media from your Cantemo Portal MAM system</summary>
+		<description lang="en">View media from your Cantemo Portal MAM system</description>
+		<license>GPL 2.0</license>
+		<platform>all</platform>
+        <language>da</language>
+	</extension>
+</addon>

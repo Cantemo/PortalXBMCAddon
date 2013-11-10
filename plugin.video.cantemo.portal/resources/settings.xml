@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+
+    <setting id="hostname" type="text" label="30200" default="" />
+    <setting id="username" type="text" label="30201" default="" />
+    <setting id="user_password" type="text" option="hidden" label="30202" enable="!eq(-1,)" default="" />
+</settings>
