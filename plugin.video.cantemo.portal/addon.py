@@ -114,7 +114,9 @@ def playItem(itemid):
 
     if url:
         li = xbmcgui.ListItem(itemid)
-        xbmc.Player(xbmc.PLAYER_CORE_DVDPLAYER).play(url, li)
+        playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
+        playlist.add(url=url, listitem=li)
+        xbmc.Player(xbmc.PLAYER_CORE_DVDPLAYER).play(playlist)
 
 def search():
 #    try:
